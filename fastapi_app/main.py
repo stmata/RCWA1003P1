@@ -53,4 +53,4 @@ async def logout():
 app.mount("/dashboard", WSGIMiddleware(app_dash.server))
 
 if __name__ =='__main__':
-     uvicorn.run(app, host='0.0.0.0', port =8005, workers=1)
+     uvicorn.run(app, host='0.0.0.0', port =8000, workers=1)
