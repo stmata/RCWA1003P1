@@ -50,7 +50,7 @@ async def logout():
     return response
 
 # Mount the Dash App under the /dashboard path
-app.mount("/dashboard", WSGIMiddleware(app_dash).server)
+app.mount("/dashboard", WSGIMiddleware(app_dash.server))
 
 if __name__ =='__main__':
      uvicorn.run(app, host='0.0.0.0', port =8020, workers=1)
