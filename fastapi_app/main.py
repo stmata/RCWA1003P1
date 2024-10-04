@@ -7,7 +7,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.wsgi import WSGIMiddleware
 from fastapi.templating import Jinja2Templates
 import uvicorn
-
+from dash_app import app as app_dash
 # Create fastAPI app
 
 app = FastAPI()
@@ -33,6 +33,24 @@ async def home_page(request: Request):
 @app.get("/login")
 async def login_page(request: Request):
     return templates.TemplateResponse("login.html", {"request": request})
+
+@app.post("/login")
+async def login(request: Request, username: str = Form(...), password: str = Form(...)):
+    if username in users and users[username] == password:
+        # Redirect to the dashboard generated with dash upon success
+        response = RedirectResponse(url='/dashboard', status_code=302)
+        response.set_cookie(key="Authorization", value="Bearer Token", httponly=True)
+        return response
+    return templates.TemplateResponse("login.html", {"request": request, "error": "Invalid credentials"})
+
+@app.get("/logout")
+async def logout():
+    response = RedirectResponse(url='/login')
+    response.delete_cookie('Authorization')
+    return response
+
+# Mount the Dash App under the /dashboard path
+app.mount("/dashboard", WSGIMiddleware(app_dash).server)
 
 if __name__ =='__main__':
      uvicorn.run(app, host='0.0.0.0', port =8020, workers=1)
