@@ -1,4 +1,4 @@
-fastapi
-dash
-uvicorn
-python-multipart
+dash==2.18.1
+fastapi==0.115.0
+python-multipart==0.0.12
+uvicorn==0.31.0
