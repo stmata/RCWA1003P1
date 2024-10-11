@@ -5,7 +5,7 @@ from dash import html, dcc
 # Initialize the Dash application
 app = dash.Dash(__name__, requests_pathname_prefix="/dashboard/")
 
-EXTERNAL_API_URL = "http://127.0.0.1:8021/info"
+EXTERNAL_API_URL = "https://weatherrcw1003.azurewebsites.net/info"
  
 def get_external_info():
     try:
